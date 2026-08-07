@@ -1,1 +1,146 @@
-<p>auth-form works!</p>
+<section class="w-full flex justify-center mt-3 pb-4">
+  <div class="w-[500px] rounded-lg border border-gray-200 bg-white shadow-sm">
+    <div class="border-b border-gray-200 px-6 py-4">
+      <h6 class="text-sm font-bold text-gray-500">Registrate</h6>
+    </div>
+
+    <div class="p-6">
+      <div>
+        <form autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
+
+          <label
+            for="inputName"
+            class="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Nombre:
+          </label>
+
+          <div class="mb-1">
+            <input
+              type="text"
+              class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              placeholder="nombre..."
+              formControlName="firstName"
+            />
+          </div>
+
+          <div class="mb-4">
+            @if(formUtils.isValidField(form,'firstName')){
+              <span class="text-sm text-red-600">
+                {{ formUtils.getFieldError(form,'firstName') }}
+              </span>
+            }
+          </div>
+
+          <label
+            for="inputLastName"
+            class="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Apellido:
+          </label>
+
+          <div class="mb-1">
+            <input
+              type="text"
+              class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              placeholder="apellido..."
+              formControlName="lastName"
+            />
+          </div>
+
+          <div class="mb-4">
+            @if(formUtils.isValidField(form,'lastName')){
+              <span class="text-sm text-red-600">
+                {{ formUtils.getFieldError(form,'lastName') }}
+              </span>
+            }
+          </div>
+
+          <label
+            for="inputEmail"
+            class="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Email:
+          </label>
+
+          <div class="mb-1">
+            <input
+              type="email"
+              class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              placeholder="email..."
+              formControlName="email"
+            />
+          </div>
+
+          <div class="mb-4">
+            @if(formUtils.isValidField(form,'email')){
+              <span class="text-sm text-red-600">
+                {{ formUtils.getFieldError(form,'email') }}
+              </span>
+            }
+          </div>
+
+          <label
+            for="inputPwd"
+            class="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Contraseña:
+          </label>
+
+          <div class="mb-1">
+            <input
+              type="password"
+              id="inputPwd"
+              class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              placeholder="contraseña..."
+              formControlName="password"
+            />
+          </div>
+
+          <div class="mb-4">
+            @if(formUtils.isValidField(form,'password')){
+              <span class="text-sm text-red-600">
+                {{ formUtils.getFieldError(form,'password') }}
+              </span>
+            }
+          </div>
+
+          <label
+            for="inputConfirmPwd"
+            class="block text-sm font-medium text-gray-700 mb-2"
+          >
+            Confirmar contraseña:
+          </label>
+
+          <div class="mb-1">
+            <input
+              type="password"
+              id="inputConfirmPwd"
+              class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              placeholder="Confirmar contraseña..."
+              formControlName="confirmPassword"
+            />
+          </div>
+
+          <div class="mb-4">
+            @if(formUtils.isValidField(form,'confirmPassword')){
+              <span class="text-sm text-red-600">
+                {{ formUtils.getFieldError(form,'confirmPassword') }}
+              </span>
+            }
+          </div>
+
+          <div>
+            <button
+              class="w-full rounded-md bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
+              type="submit"
+            >
+              Registrarse
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
