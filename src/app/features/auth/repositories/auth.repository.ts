@@ -54,4 +54,53 @@ export class AuthRepository {
     // Retornar el usuario creado
     return user;
   }
+
+
+  async login(data: AuthFormInterface) {
+
+      const { data: authData, error } =
+        await supabase.auth.signInWithPassword({
+          email: data.email,
+          password: data.password!,
+        });
+
+      if (error) {
+        throw error;
+      }
+
+      console.log('Sesión:', authData.session);
+
+      const user = authData.user;
+
+      if (!user) {
+        throw new Error('No fue posible iniciar sesión.');
+      }
+
+      return {
+        user,
+        session: authData.session,
+      };
+
+  }
+
+  async getSession() {
+
+    const { data, error } = await supabase.auth.getSession();
+
+    if (error) {
+      throw error;
+    }
+
+    return data.session;
+  }
+
+    async logout(): Promise<void> {
+
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+      throw error;
+    }
+
+  }
 }
