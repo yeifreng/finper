@@ -23,8 +23,6 @@ export default class Login {
 
          const result = await this.authService.login(data);
          this.authState.setUser(result.user);
-         console.log('Usuario en AuthState:', this.authState.user());
-         console.log('¿Está autenticado?', this.authState.user() !== null);
 
          alert('Inicio de sesión exitoso.');
          this.router.navigate(['/dashboard']);

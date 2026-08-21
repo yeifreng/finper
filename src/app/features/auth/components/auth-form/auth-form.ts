@@ -27,6 +27,17 @@ export default class AuthForm {
 
 }
 
+private configureForgotPasswordValidation(): void {
+
+  ValidationModeUtils.clearValidators(this.form, [
+    'firstName',
+    'lastName',
+    'password',
+    'confirmPassword',
+  ]);
+
+}
+
     // 1. Inyección de dependencias
     private readonly fb = inject(NonNullableFormBuilder);
 
@@ -58,6 +69,10 @@ export default class AuthForm {
       //Si estamos en el modo de login, configuramos la validacion del formulario para el modo de login
       if (this.isLoginMode()) {
         this.configureLoginValidation();
+      }
+
+      if (this.isForgotPasswordMode()) {
+        this.configureForgotPasswordValidation();
       }
 
       if (this.form.invalid) {
@@ -98,6 +113,6 @@ export default class AuthForm {
 
           break;
       }
-}
+    }
 
 }

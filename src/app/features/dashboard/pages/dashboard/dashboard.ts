@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export default class Dashboard {
 
     private readonly authService = inject(AuthService);
-  private readonly router = inject(Router);
+    private readonly router = inject(Router);
 
   async logout(): Promise<void> {
 

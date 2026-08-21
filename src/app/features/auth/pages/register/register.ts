@@ -19,8 +19,6 @@ export default class Register {
 
      const user = await this.authService.register(data);
 
-     console.log(user);
-
      alert('Usuario registrado correctamente.');
 
    } catch (error) {

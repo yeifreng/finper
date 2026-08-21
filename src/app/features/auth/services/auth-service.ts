@@ -49,9 +49,22 @@ export class AuthService {
       }
   }
 
+  async forgotPassword(data: AuthFormInterface): Promise<void> {
+
+    await this.repository.forgotPassword({
+      email: data.email,
+    });
+  }
+
   async logout(): Promise<void> {
 
     await this.repository.logout();
+
+  }
+
+  async resetPassword(newPassword: string): Promise<void> {
+
+    await this.repository.resetPassword(newPassword);
 
   }
 

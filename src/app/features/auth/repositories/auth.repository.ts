@@ -8,7 +8,6 @@ import { supabase } from '../../../core/providers/supabase.provider';
 export class AuthRepository {
 
   async register(data: AuthFormInterface){
-    console.log('datos desde repository:', data);
 
     // Crear el usuario en Supabase Auth
     const { data: authData, error } = await supabase.auth.signUp({
@@ -68,7 +67,6 @@ export class AuthRepository {
         throw error;
       }
 
-      console.log('Sesión:', authData.session);
 
       const user = authData.user;
 
@@ -80,6 +78,33 @@ export class AuthRepository {
         user,
         session: authData.session,
       };
+
+  }
+
+  async forgotPassword(data: AuthFormInterface): Promise<void> {
+
+    const { error } = await supabase.auth.resetPasswordForEmail(
+      data.email,
+      {
+        redirectTo: `${window.location.origin}/auth/reset-password`,
+      }
+    );
+
+    if (error) {
+      throw error;
+    }
+
+  }
+
+  async resetPassword(newPassword: string): Promise<void> {
+
+    const { error } = await supabase.auth.updateUser({
+      password: newPassword,
+    });
+
+    if (error) {
+      throw error;
+    }
 
   }
 
