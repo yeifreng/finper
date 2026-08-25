@@ -1,170 +1,252 @@
-<section class="w-full flex justify-center mt-3 pb-4">
-  <div class="w-[500px] rounded-lg border border-gray-200 bg-white shadow-sm">
-    <div class="border-b border-gray-200 px-6 py-4">
-      <h6 class="text-sm font-bold text-gray-500">Registrate</h6>
+<section class="w-full min-h-screen flex justify-center items-center">
+  <div class="w-90 rounded-lg border border-gray-200 bg-white shadow-lg">
+    <div class="border-gray-200 mt-8">
+      <h1 class="text-center text-blue-500 font-bold">FINPER</h1>
+        <p class="text-center mb-2 text-[11px] text-gray-500">
+          Conoce tus ingresos, controla tus gastos
+        </p>
+      @if (isRegisterMode()) {
+        <h6 class="text-lg font-bold text-center text-gray-500">Registrate</h6>
+      }
+      @if (isLoginMode()) {
+        <h6 class="text-lg font-bold text-center text-gray-500">Iniciar Sesión</h6>
+      }
+      @if (isForgotPasswordMode()) {
+        <h6 class="text-lg font-bold text-center text-gray-500">Restablecer Contraseña</h6>
+        <p class="text-center text-[11px] text-gray-500 px-4">
+          Introduce el correo electrónico asociado a tu cuenta y te enviaremos un enlace para restablecer tu contraseña.
+        </p>
+      }
     </div>
 
-    <div class="p-6">
+    <div class="px-6 pb-6 pt-4">
       <div>
         <form autocomplete="off" [formGroup]="form" (ngSubmit)="onSubmit()">
           @if (isRegisterMode()) {
-          <label
-            for="inputName"
-            class="block text-sm font-medium text-gray-700 mb-2"
-          >
-            Nombre:
-          </label>
+            <div class="grid grid-cols-2 gap-4">
+              <!-- input Name -->
+            <div>
+              <label for="inputName" class="block text-xs font-medium text-gray-700">
+                Nombre:
+              </label>
 
-          <div class="mb-1">
-            <input
-              type="text"
-              class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              placeholder="nombre..."
-              formControlName="firstName"
-            />
-          </div>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"><path fill="#666666" d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5s-5 2.24-5 5s2.24 5 5 5m0-8c1.65 0 3 1.35 3 3s-1.35 3-3 3s-3-1.35-3-3s1.35-3 3-3M4 22h16c.55 0 1-.45 1-1v-1c0-3.86-3.14-7-7-7h-4c-3.86 0-7 3.14-7 7v1c0 .55.45 1 1 1m6-7h4c2.76 0 5 2.24 5 5H5c0-2.76 2.24-5 5-5"/></svg>
+                </span>
+                <input
+                  type="text"
+                  class="w-full rounded-md border placeholder:text-xs border-gray-300 py-1 pl-10 pr-3 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  placeholder="Ej. Juan"
+                  formControlName="firstName"
+                />
+              </div>
 
-          <div class="mb-4">
-            @if(formUtils.isValidField(form,'firstName')){
-              <span class="text-sm text-red-600">
-                {{ formUtils.getFieldError(form,'firstName') }}
+              <div class="mb-2">
+                @if (formUtils.isValidField(form, 'firstName')) {
+                  <span class="text-xs text-red-600">
+                    {{ formUtils.getFieldError(form, 'firstName') }}
+                  </span>
+                }
+              </div>
+            </div>
+            <!-- input lastName -->
+            <div>
+              <label for="inputLastName" class="block text-xs font-medium text-gray-700">
+                Apellido:
+              </label>
+
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"><path fill="#666666" d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5s-5 2.24-5 5s2.24 5 5 5m0-8c1.65 0 3 1.35 3 3s-1.35 3-3 3s-3-1.35-3-3s1.35-3 3-3M4 22h16c.55 0 1-.45 1-1v-1c0-3.86-3.14-7-7-7h-4c-3.86 0-7 3.14-7 7v1c0 .55.45 1 1 1m6-7h4c2.76 0 5 2.24 5 5H5c0-2.76 2.24-5 5-5"/></svg>
+                </span>
+                <input
+                  type="text"
+                  class="w-full rounded-md border placeholder:text-xs border-gray-300 py-1 pl-10 pr-3 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  placeholder="Ej. Pérez"
+                  formControlName="lastName"
+                />
+              </div>
+
+              <div class="mb-2">
+                @if (formUtils.isValidField(form, 'lastName')) {
+                  <span class="text-xs text-red-600">
+                    {{ formUtils.getFieldError(form, 'lastName') }}
+                  </span>
+                }
+              </div>
+            </div>
+            </div>
+          }
+          <!-- input email -->
+          <div class="mt-4">
+            <label for="inputEmail" class="block text-xs font-medium text-gray-700">
+              Correo Electronico:
+            </label>
+
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
+                  <path
+                    fill="#666666"
+                    d="M5 17V3h18v14zm9-4.725l-7-4.85V15h14V7.425zm0-2.425L21 5H7zM1 21V6.5h2V19h16.5v2zM21 5H7z"
+                  />
+                </svg>
               </span>
-            }
-          </div>
+              <input
+                type="email"
+                class="w-full rounded-md border placeholder:text-xs border-gray-300 py-1 pl-10 pr-3 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                placeholder="nombre@empresa.com"
+                formControlName="email"
+              />
+            </div>
 
-          <label
-            for="inputLastName"
-            class="block text-sm font-medium text-gray-700 mb-2"
-          >
-            Apellido:
-          </label>
-
-          <div class="mb-1">
-            <input
-              type="text"
-              class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              placeholder="apellido..."
-              formControlName="lastName"
-            />
-          </div>
-
-          <div class="mb-4">
-            @if(formUtils.isValidField(form,'lastName')){
-              <span class="text-sm text-red-600">
-                {{ formUtils.getFieldError(form,'lastName') }}
-              </span>
-            }
-          </div>
-        }
-          <label
-            for="inputEmail"
-            class="block text-sm font-medium text-gray-700 mb-2"
-          >
-            Email:
-          </label>
-
-          <div class="mb-1">
-            <input
-              type="email"
-              class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              placeholder="email..."
-              formControlName="email"
-            />
-          </div>
-
-          <div class="mb-4">
-            @if(formUtils.isValidField(form,'email')){
-              <span class="text-sm text-red-600">
-                {{ formUtils.getFieldError(form,'email') }}
-              </span>
-            }
+            <div class="mb-2">
+              @if (formUtils.isValidField(form, 'email')) {
+                <span class="text-xs text-red-600">
+                  {{ formUtils.getFieldError(form, 'email') }}
+                </span>
+              }
+            </div>
           </div>
           @if (!isForgotPasswordMode()) {
-          <label
-            for="inputPwd"
-            class="block text-sm font-medium text-gray-700 mb-2"
-          >
-            Contraseña:
-          </label>
+            <!-- input password -->
+            <div class="mt-4">
+              <label for="inputPwd" class="block text-xs font-medium text-gray-700">
+                Contraseña:
+              </label>
 
-          <div class="mb-1">
-            <input
-              type="password"
-              id="inputPwd"
-              class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              placeholder="contraseña..."
-              formControlName="password"
-            />
-          </div>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    width="20"
+                    height="20"
+                  >
+                    <path
+                      fill="#666666"
+                      fill-rule="evenodd"
+                      d="M4 5a4 4 0 1 1 8 0v1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1zm6.5 0v1h-5V5a2.5 2.5 0 0 1 5 0m-7 2.5v6h9v-6zM9 12V9H7v3z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                <input
+                  type="password"
+                  id="inputPwd"
+                  class="w-full rounded-md border placeholder:text-xs border-gray-300 py-1 pl-10 pr-3 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  placeholder="*********"
+                  formControlName="password"
+                />
+              </div>
 
-          <div class="mb-4">
-            @if(formUtils.isValidField(form,'password')){
-              <span class="text-sm text-red-600">
-                {{ formUtils.getFieldError(form,'password') }}
-              </span>
-            }
-          </div>
-        }
+              <div class="mb-2">
+                @if (formUtils.isValidField(form, 'password')) {
+                  <span class="text-xs text-red-600">
+                    {{ formUtils.getFieldError(form, 'password') }}
+                  </span>
+                }
+              </div>
+            </div>
+          }
           @if (isRegisterMode()) {
-          <label
-            for="inputConfirmPwd"
-            class="block text-sm font-medium text-gray-700 mb-2"
-          >
-            Confirmar contraseña:
-          </label>
+            <!-- input confirm password -->
+            <div class="mt-4">
+              <label for="inputConfirmPwd" class="block text-xs font-medium text-gray-700">
+                Confirmar contraseña:
+              </label>
 
-          <div class="mb-1">
-            <input
-              type="password"
-              id="inputConfirmPwd"
-              class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              placeholder="Confirmar contraseña..."
-              formControlName="confirmPassword"
-            />
-          </div>
+              <div class="relative mb-2">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    width="20"
+                    height="20"
+                  >
+                    <path
+                      fill="#666666"
+                      fill-rule="evenodd"
+                      d="M4 5a4 4 0 1 1 8 0v1h1a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h1zm6.5 0v1h-5V5a2.5 2.5 0 0 1 5 0m-7 2.5v6h9v-6zM9 12V9H7v3z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                </span>
+                <input
+                  type="password"
+                  id="inputConfirmPwd"
+                  class="w-full rounded-md border placeholder:text-xs border-gray-300 py-1 pl-10 pr-3 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                  placeholder="*********"
+                  formControlName="confirmPassword"
+                />
+              </div>
 
-          <div class="mb-4">
-            @if(formUtils.isValidField(form,'confirmPassword')){
-              <span class="text-sm text-red-600">
-                {{ formUtils.getFieldError(form,'confirmPassword') }}
-              </span>
-            }
-          </div>
-        }
+              <div class="mb-2">
+                @if (formUtils.isValidField(form, 'confirmPassword')) {
+                  <span class="text-xs text-red-600">
+                    {{ formUtils.getFieldError(form, 'confirmPassword') }}
+                  </span>
+                }
+              </div>
+            </div>
+          }
 
-        @if(isRegisterMode()){
-          <div>
-            <button
-              class="w-full rounded-md bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
-              type="submit"
-            >
-              Registrarse
-            </button>
-          </div>
-        }
+          @if (isLoginMode()) {
+            <h6 class="text-xs mb-4 font-bold text-right text-blue-800">
+              ¿Olvidaste tu contraseña?
+            </h6>
+          }
 
-        @if(isLoginMode()){
-          <div>
-            <button
-              class="w-full rounded-md bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
-              type="submit"
-            >
-              Iniciar sesión
-            </button>
-          </div>
-        }
+          @if (isRegisterMode()) {
+            <div class="mt-4">
+              <button
+                class="w-full rounded-md bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
+                type="submit"
+              >
+                Registrarse
+              </button>
+            </div>
+            <div class="flex justify-center mt-12">
 
-        @if (isForgotPasswordMode()) {
-          <div>
-            <button
-              class="w-full rounded-md bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
-              type="submit"
-            >
-              Recuperar contraseña
-            </button>
-          </div>
-        }
+                <p class="text-xs text-gray-500">
+                  ¿Ya tienes una cuenta?
+                  <a class="text-xs font-bold text-right text-blue-600 hover:text-blue-900 cursor-pointer">Inicia sesión</a>
+                </p>
 
+
+            </div>
+          }
+
+          @if (isLoginMode()) {
+            <div>
+              <button
+                class="w-full rounded-md bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
+                type="submit"
+              >
+                Iniciar sesión
+              </button>
+            </div>
+            <div class="flex justify-between mt-12">
+              <h6 class="text-xs text-right text-gray-500">¿No tienes una cuenta?</h6>
+              <a class="text-xs font-bold text-right text-blue-600 hover:text-blue-900 cursor-pointer">Registrate ahora</a>
+            </div>
+          }
+
+          @if (isForgotPasswordMode()) {
+            <div class="mt-4">
+              <button
+                class="w-full rounded-md bg-blue-600 px-4 py-2 text-white transition hover:bg-blue-700"
+                type="submit"
+              >
+                Recuperar contraseña
+              </button>
+            </div>
+            <div class="flex justify-center mt-8 gap-1 cursor-pointer">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16"><path fill="#193cb8" d="m4 10l-.707.707L2.586 10l.707-.707zm17 8a1 1 0 1 1-2 0zM8.293 15.707l-5-5l1.414-1.414l5 5zm-5-6.414l5-5l1.414 1.414l-5 5zM4 9h10v2H4zm17 7v2h-2v-2zm-7-7a7 7 0 0 1 7 7h-2a5 5 0 0 0-5-5z"/></svg>
+              <a class="text-xs font-bold text-right text-blue-600 hover:text-blue-900">Inicio de sesión</a>
+            </div>
+          }
         </form>
       </div>
     </div>

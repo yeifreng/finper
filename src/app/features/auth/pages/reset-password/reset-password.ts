@@ -30,15 +30,6 @@ private readonly router = inject(Router);
     return null;
   }
 
-
-
-
-
-
-
-
-
-
   formUtils = FormUtils;
 
   private readonly fb = inject(FormBuilder);
@@ -52,11 +43,6 @@ private readonly router = inject(Router);
       validators: this.passwordsMatchValidator.bind(this),
     }
   );
-
-
-
-
-
 
   async onSubmit(): Promise<void> {
 
