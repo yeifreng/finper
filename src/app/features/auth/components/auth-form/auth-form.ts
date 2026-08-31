@@ -3,10 +3,11 @@ import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { AuthFormInterface } from '../../interfaces/auth-form.interface';
 import { FormUtils } from '../../../../shared/utils/form-utils';
 import { ValidationModeUtils } from '../../../../shared/utils/validation-mode-utils';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-auth-form',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './auth-form.html',
   styleUrl: './auth-form.css',
 })
@@ -41,6 +42,18 @@ private configureForgotPasswordValidation(): void {
     // 1. Inyección de dependencias
     private readonly fb = inject(NonNullableFormBuilder);
 
+    //Mostrar u ocultar la contraseña y la confirmacion de la contraseña
+    showPassword = false;
+    showConfirmPassword = false;
+
+    togglePassword(): void {
+      this.showPassword = !this.showPassword;
+    }
+
+    toggleConfirmPassword(): void {
+      this.showConfirmPassword = !this.showConfirmPassword;
+    }
+
     // 2. Inputs
     mode = input.required<'login' | 'register' | 'forgot-password'>();
 
@@ -59,8 +72,10 @@ private configureForgotPasswordValidation(): void {
       firstName: this.fb.control('', [ Validators.required, Validators.minLength(3),Validators.maxLength(10),]),
       lastName: this.fb.control('', [Validators.required,Validators.minLength(3),Validators.maxLength(10),]),
       email: this.fb.control('', [Validators.required,Validators.email,]),
-      password: this.fb.control('', [Validators.required,Validators.minLength(8),]),
-      confirmPassword: this.fb.control('', [Validators.required,Validators.minLength(8),]),
+      password: this.fb.control('', [Validators.required,Validators.minLength(8), Validators.pattern(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/)]),
+      confirmPassword: this.fb.control('', [Validators.required,Validators.minLength(8), Validators.pattern(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/)]),
     });
 
     //Envio de los datos del formulario

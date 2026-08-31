@@ -1,0 +1,23 @@
+@if (notificationService.currentNotification(); as notification) {
+
+  <div class="fixed right-5 top-5 z-50 w-full max-w-sm">
+
+    <div
+      class="rounded-lg border bg-white p-4 shadow-lg"
+      [class.border-green-500]="notification.type === 'success'"
+      [class.border-red-500]="notification.type === 'error'"
+    >
+
+      <p
+        class="text-sm"
+        [class.text-green-700]="notification.type === 'success'"
+        [class.text-red-700]="notification.type === 'error'"
+      >
+        {{ notification.message }}
+      </p>
+
+    </div>
+
+  </div>
+
+}

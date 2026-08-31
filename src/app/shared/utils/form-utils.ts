@@ -29,6 +29,8 @@ export class FormUtils {
           return `Máximo de ${errors['maxlength'].requiredLength} caracteres.`;
         case 'email':
           return 'Correo electrónico inválido.';
+        case 'pattern':
+          return 'La contraseña debe tener mínimo 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.';
       }
     }
     return null

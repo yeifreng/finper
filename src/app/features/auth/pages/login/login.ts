@@ -4,6 +4,8 @@ import { AuthService } from '../../services/auth-service';
 import { AuthFormInterface } from '../../interfaces/auth-form.interface';
 import { AuthstateService } from '../../../../core/services/authstate-service';
 import { Router } from '@angular/router';
+import { NotificationService } from '../../../../core/services/notification-service';
+import { LoadingService } from '../../../../core/services/loading-service';
 
 @Component({
   selector: 'app-login',
@@ -16,26 +18,32 @@ export default class Login {
    private readonly authService = inject(AuthService);
    private readonly authState = inject(AuthstateService);
    private readonly router = inject(Router);
+   private readonly notificationService = inject(NotificationService);
+   private readonly loadingService = inject(LoadingService);
 
    async login(data: AuthFormInterface) {
 
-       try {
+    this.loadingService.show();
+
+      try {
 
          const result = await this.authService.login(data);
          this.authState.setUser(result.user);
 
-         alert('Inicio de sesión exitoso.');
-         this.router.navigate(['/dashboard']);
+         this.notificationService.success('Inicio de sesión exitoso.');
+         await this.router.navigate(['/dashboard']);
 
-       } catch (error) {
+      } catch (error) {
 
-         console.error(error);
+        if (error instanceof Error) {
+          this.notificationService.error(error.message);
+        }
 
-         if (error instanceof Error) {
-           alert(error.message);
-         }
+      } finally {
 
-       }
+          this.loadingService.hide();
+
+      }
    }
 
 }
