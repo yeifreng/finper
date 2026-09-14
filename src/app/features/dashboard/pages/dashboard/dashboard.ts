@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject, signal } from '@angular/core';
 import { AuthService } from '../../../auth/services/auth-service';
 import { Router } from '@angular/router';
 
@@ -19,6 +19,22 @@ export default class Dashboard {
 
     await this.router.navigate(['/auth/login']);
 
+  }
+
+  isSidebarOpen = signal(window.innerWidth >= 1024);
+  isUserMenuOpen = signal(false);
+
+  toggleSidebar(): void {
+    this.isSidebarOpen.update((isOpen) => !isOpen);
+  }
+
+  toggleUserMenu(): void {
+    this.isUserMenuOpen.update((isOpen) => !isOpen);
+  }
+
+  @HostListener('window:resize')
+    onResize(): void {
+    this.isSidebarOpen.set(window.innerWidth >= 1024);
   }
 
 }
