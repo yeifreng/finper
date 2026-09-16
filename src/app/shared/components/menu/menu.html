@@ -1,1 +1,99 @@
-<p>menu works!</p>
+<nav
+        class="flex h-16 items-center justify-between border-b border-gray-200 bg-white px-6 shadow-sm">
+        <!-- Título -->
+        <div class="flex items-center gap-3">
+          <button
+            type="button"
+            (click)="onToggleSidebar()"
+            class="cursor-pointer rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+          >
+            ☰
+          </button>
+
+          <h1 class="text-lg font-bold text-gray-600">Dashboard</h1>
+        </div>
+        <!-- Acciones -->
+        <div class="flex items-center gap-4">
+          <!-- Notificaciones -->
+          <button
+            type="button"
+            class="cursor-pointer rounded-lg p-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+          >
+            🔔
+          </button>
+
+          <!-- Usuario -->
+          <!-- Usuario -->
+          <div class="relative">
+            <button
+              type="button"
+              (click)="toggleUserMenu()"
+              class="flex cursor-pointer items-center gap-2 rounded-lg px-2 py-1 hover:bg-gray-100"
+            >
+              <div
+                class="flex h-9 w-9 items-center justify-center rounded-full bg-blue-600 text-sm font-semibold text-white"
+              >
+                Y
+              </div>
+
+              <div class="text-left">
+                <p class="text-sm font-medium text-gray-700">Yeifren</p>
+
+                <p class="text-xs text-gray-500">usuario@email.com</p>
+              </div>
+
+              <span class="text-xs text-gray-500"> ▾ </span>
+            </button>
+
+              <!-- Área para detectar clic fuera -->
+              @if(isUserMenuOpen()){
+            <div
+              class="fixed inset-0 z-0"
+              (click)="toggleUserMenu()">
+            </div>
+            }
+            <!-- Dropdown -->
+            <div
+              class="absolute right-0 z-10 mt-3 w-56 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg"
+              [class.hidden]="!isUserMenuOpen()">
+              <!-- Información del usuario -->
+              <div class="border-b border-gray-100 px-4 py-3">
+                <p class="text-sm font-semibold text-gray-800">Yeifren</p>
+
+                <p class="truncate text-xs text-gray-500">usuario@email.com</p>
+              </div>
+
+              <!-- Opciones -->
+              <div class="p-2">
+                <a
+                  href="#"
+                  class="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  <span>👤</span>
+                  <span>Mi perfil</span>
+                </a>
+
+                <a
+                  href="#"
+                  class="flex items-center gap-3 rounded-md px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  <span>⚙️</span>
+                  <span>Configuración</span>
+                </a>
+              </div>
+
+              <!-- Logout -->
+              <div class="border-t border-gray-100 p-2">
+                <button
+                  type="button"
+                  (click)="logout()"
+                  class="flex w-full cursor-pointer items-center gap-3 rounded-md px-3 py-2 text-sm text-red-600 hover:bg-red-50"
+                >
+                  <span>🚪</span>
+                  <span>Cerrar sesión</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>

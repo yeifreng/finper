@@ -1,1 +1,88 @@
-<p>sidebar works!</p>
+<div class="flex h-full flex-col">
+          <!-- Logo -->
+      <header class="mb-16">
+        <h1 class="text-xl font-bold">💰 Finanzas</h1>
+      </header>
+
+      <!-- Navegación -->
+      <nav class="flex-1">
+        <ul class="flex flex-col gap-2">
+          <li>
+            <a
+              href="#"
+              class="flex items-center gap-3 rounded-lg bg-gray-800 px-4 py-3 text-sm font-medium"
+            >
+              <span>🏠</span>
+              <span>Dashboard</span>
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="#"
+              class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm hover:bg-gray-800"
+            >
+              <span>💵</span>
+              <span>Ingresos</span>
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="#"
+              class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm hover:bg-gray-800"
+            >
+              <span>💸</span>
+              <span>Gastos</span>
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="#"
+              class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm hover:bg-gray-800"
+            >
+              <span>📊</span>
+              <span>Presupuesto</span>
+            </a>
+          </li>
+
+          <li>
+            <a
+              href="#"
+              class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm hover:bg-gray-800"
+            >
+              <span>🏷️</span>
+              <span>Categorías</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Acciones -->
+      <footer>
+        <ul class="flex flex-col gap-2">
+          <li>
+            <a
+              href="#"
+              class="flex items-center gap-3 rounded-lg px-4 py-3 text-sm hover:bg-gray-800"
+            >
+              <span>⚙️</span>
+              <span>Configuración</span>
+            </a>
+          </li>
+
+          <li>
+            <button
+              type="button"
+              (click)="logout()"
+              class="flex w-full cursor-pointer items-center gap-3 rounded-lg px-4 py-3 text-sm hover:bg-gray-800"
+            >
+              <span>🚪</span>
+              <span>Cerrar sesión</span>
+            </button>
+          </li>
+        </ul>
+      </footer>
+
+</div>
