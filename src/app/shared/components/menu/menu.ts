@@ -1,17 +1,22 @@
-import { Component, HostListener, inject, output, signal } from '@angular/core';
+import { Component, HostListener, inject, output, signal, OnInit } from '@angular/core';
 import { AuthService } from '../../../features/auth/services/auth-service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { ProfileInterface } from '../../../features/profile/interfaces/ProfileInterface.interface';
+import { ProfileService } from '../../../features/profile/services/profile-service';
+import { NotificationService } from '../../../core/services/notification-service';
 
 @Component({
   selector: 'app-menu',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './menu.html',
   styleUrl: './menu.css',
 })
-export class Menu {
+export class Menu implements OnInit {
 
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly profileService = inject(ProfileService);
+  private readonly notificationService = inject(NotificationService);
 
   readonly toggleSidebar = output<void>();
 
@@ -33,5 +38,37 @@ export class Menu {
   toggleUserMenu(): void {
     this.isUserMenuOpen.update((isOpen) => !isOpen);
   }
+
+  readonly profile = signal<ProfileInterface>({
+    firstName: '',
+    lastName: '',
+    email: '',
+  });
+
+  async ngOnInit(): Promise<void> {
+    await this.loadProfile();
+  }
+
+  async loadProfile(): Promise<void> {
+    try {
+      const profile = await this.profileService.getProfile();
+      this.profile.set(profile);
+    } catch (error) {
+      this.notificationService.error((error as Error).message);
+    }
+  }
+
+    // Helpers para el template
+  get displayName(): string {
+    const { firstName, lastName } = this.profile();
+    const full = `${firstName} ${lastName}`.trim();
+    return full || 'Usuario';
+  }
+
+  get initial(): string {
+    const { firstName } = this.profile();
+    return firstName?.charAt(0).toUpperCase() || 'U';
+  }
+
 
 }

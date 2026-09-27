@@ -1,0 +1,56 @@
+<div class="flex min-h-screen flex-col">
+  <div class="flex min-h-0 flex-1">
+    <!-- sidebar -->
+    <aside
+      class="fixed inset-y-0 left-0 z-50 flex w-60 flex-col overflow-hidden bg-gray-950 p-4 text-white shadow-lg transition-transform duration-300 lg:static lg:z-auto lg:transition-[width] lg:duration-300"
+      [class.-translate-x-full]="!isSidebarOpen()"
+      [class.translate-x-0]="isSidebarOpen()"
+      [class.lg:w-0]="!isSidebarOpen()"
+      [class.lg:w-60]="isSidebarOpen()"
+      [class.lg:p-0]="!isSidebarOpen()"
+      [class.lg:p-4]="isSidebarOpen()"
+    >
+      <app-sidebar class="flex-1" [isSidebarOpen]="isSidebarOpen()"> </app-sidebar>
+    </aside>
+
+    <div class="flex min-w-0 flex-1 flex-col gap-4">
+      <app-menu (toggleSidebar)="toggleSidebar()"> </app-menu>
+      <main class="flex-1 p-4">
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold text-gray-800">Mi perfil</h2>
+
+          <p class="mt-1 text-sm text-gray-500">
+            Administra tu información personal y la seguridad de tu cuenta.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-12">
+          <!-- LEFT -->
+          <aside class="lg:col-span-4">
+            <app-profile-card
+              [profile]="profile()"
+              [activeSection]="activeSection()"
+              (sectionChange)="onSectionChange($event)">
+            </app-profile-card>
+
+          </aside>
+
+          <!-- RIGHT -->
+          <section class="lg:col-span-8">
+            <app-profile-form
+              [profile]="profile()"
+              [activeSection]="activeSection()"
+              (profileSaved)="onProfileSaved($event)">
+            </app-profile-form>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <div
+      class="fixed inset-0 z-40 bg-black/50 lg:hidden"
+      [class.hidden]="!isSidebarOpen()"
+      (click)="isSidebarOpen.set(false)"
+    ></div>
+  </div>
+  <app-footer></app-footer>
+</div>
