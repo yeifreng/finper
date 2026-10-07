@@ -1,0 +1,115 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+
+  <!-- Monto -->
+  <div>
+    <label for="amount" class="mb-2 block text-sm font-medium text-gray-700">
+      Monto
+    </label>
+    <input
+      id="amount"
+      type="number"
+      step="50"
+      min="50"
+      formControlName="amount"
+      placeholder="0.00"
+      class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+      [class.border-red-500]="FormUtils.isValidField(form, 'amount')"
+    />
+    @if (FormUtils.isValidField(form, 'amount')) {
+      <p class="mt-1 text-xs text-red-600">
+        {{ FormUtils.getFieldError(form, 'amount') }}
+      </p>
+    }
+  </div>
+
+  <!-- Categoría -->
+  <div>
+    <label for="categoryId" class="mb-2 block text-sm font-medium text-gray-700">
+      Categoría
+    </label>
+    <div class="relative">
+      <select
+        id="categoryId"
+        formControlName="categoryId"
+        class="w-full cursor-pointer appearance-none rounded-lg border border-gray-300 bg-white px-4 py-2.5 pr-10 text-sm text-gray-800 transition hover:border-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+        [class.text-gray-400]="!form.controls.categoryId.value"
+        [class.border-red-500]="FormUtils.isValidField(form, 'categoryId')"
+      >
+        <option value="" disabled>Seleccione categoría...</option>
+        @for (category of categories(); track category.id) {
+          <option [value]="category.id">{{ category.name }}</option>
+        }
+      </select>
+
+      <span class="pointer-events-none absolute inset-y-0 right-3 flex items-center text-gray-400">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      </span>
+    </div>
+    @if (FormUtils.isValidField(form, 'categoryId')) {
+      <p class="mt-1 text-xs text-red-600">
+        {{ FormUtils.getFieldError(form, 'categoryId') }}
+      </p>
+    }
+  </div>
+
+  <!-- Fecha -->
+  <div>
+    <label for="date" class="mb-2 block text-sm font-medium text-gray-700">
+      Fecha
+    </label>
+    <input
+      id="date"
+      type="date"
+      formControlName="date"
+      [max]="maxDate"
+      class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+      [class.border-red-500]="FormUtils.isValidField(form, 'date')"
+    />
+    @if (FormUtils.isValidField(form, 'date')) {
+      <p class="mt-1 text-xs text-red-600">
+        {{ FormUtils.getFieldError(form, 'date') }}
+      </p>
+    }
+  </div>
+
+  <!-- Descripción -->
+  <div>
+    <label for="description" class="mb-2 block text-sm font-medium text-gray-700">
+      Descripción
+    </label>
+    <input
+      id="description"
+      type="text"
+      formControlName="description"
+      placeholder="Ej: Pago de nómina, compra supermercado..."
+      class="w-full rounded-lg border border-gray-300 px-4 py-2.5 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+      [class.border-red-500]="FormUtils.isValidField(form, 'description')"
+    />
+    @if (FormUtils.isValidField(form, 'description')) {
+      <p class="mt-1 text-xs text-red-600">
+        {{ FormUtils.getFieldError(form, 'description') }}
+      </p>
+    }
+  </div>
+
+  <!-- Acciones -->
+  <div class="flex justify-end gap-2 pt-2">
+    <button
+      type="button"
+      (click)="onCancel()"
+      class="cursor-pointer rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+    >
+      Cancelar
+    </button>
+
+    <button
+      type="submit"
+      class="cursor-pointer rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+    >
+      {{ isEditMode() ? 'Guardar cambios' : 'Crear' }}
+    </button>
+  </div>
+
+</form>

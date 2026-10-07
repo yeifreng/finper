@@ -31,6 +31,8 @@ export class FormUtils {
           return 'Correo electrónico inválido.';
         case 'pattern':
           return 'La contraseña debe tener mínimo 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial.';
+        case 'maxDate':
+          return 'La fecha no puede ser mayor a la fecha actual.';
       }
     }
     return null

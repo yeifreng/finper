@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, output, signal, OnInit } from '@angular/core';
+import { Component, HostListener, inject, output, signal, OnInit, input } from '@angular/core';
 import { AuthService } from '../../../features/auth/services/auth-service';
 import { Router, RouterLink } from '@angular/router';
 import { ProfileInterface } from '../../../features/profile/interfaces/ProfileInterface.interface';
@@ -17,6 +17,8 @@ export class Menu implements OnInit {
   private readonly router = inject(Router);
   private readonly profileService = inject(ProfileService);
   private readonly notificationService = inject(NotificationService);
+
+  readonly title = input<string>('Dashboard');
 
   readonly toggleSidebar = output<void>();
 

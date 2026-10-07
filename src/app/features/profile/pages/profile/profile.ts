@@ -30,6 +30,15 @@ export default class Profile {
     typeof window !== 'undefined' ? window.innerWidth >= 1024 : true
   );
 
+  toggleSidebar(): void {
+    this.isSidebarOpen.update((isOpen) => !isOpen);
+  }
+
+  @HostListener('window:resize')
+  onResize(): void {
+    this.isSidebarOpen.set(window.innerWidth >= 1024);
+  }
+
   readonly activeSection = signal<'profile' | 'security'>('profile');
 
   readonly profile = signal<ProfileInterface>({
@@ -62,14 +71,7 @@ export default class Profile {
     this.profile.set(updated);
   }
 
-  toggleSidebar(): void {
-    this.isSidebarOpen.update((isOpen) => !isOpen);
-  }
 
-  @HostListener('window:resize')
-  onResize(): void {
-    this.isSidebarOpen.set(window.innerWidth >= 1024);
-  }
 }
 
 

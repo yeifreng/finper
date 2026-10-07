@@ -16,10 +16,27 @@ export const routes: Routes = [
     loadComponent: () => import('./features/dashboard/pages/dashboard/dashboard')
   },
 
-    {
+  {
     path: 'profile',
     canActivate: [authGuard],
     loadComponent: () => import('./features/profile/pages/profile/profile')
+  },
+  {
+    path: 'category',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/category/pages/category/category')
+  },
+
+  {
+    path: 'income',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/income/pages/income/income')
+  },
+
+  {
+    path: 'expense',
+    canActivate: [authGuard],
+    loadComponent: () => import('./features/expense/pages/expense/expense')
   },
 
   {

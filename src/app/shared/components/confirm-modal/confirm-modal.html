@@ -1,0 +1,65 @@
+@if (isOpen()) {
+  <!-- Backdrop -->
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+    (click)="onCancel()"
+  >
+    <!-- Modal card -->
+    <div
+      class="w-full max-w-md overflow-hidden rounded-xl bg-white shadow-xl"
+      (click)="$event.stopPropagation()"
+    >
+      <!-- Header -->
+      <div class="flex items-start gap-4 p-6">
+
+        <!-- Icono -->
+        <div
+          class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full"
+          [class.bg-red-100]="variant() === 'danger'"
+          [class.text-red-600]="variant() === 'danger'"
+          [class.bg-blue-100]="variant() === 'primary'"
+          [class.text-blue-600]="variant() === 'primary'"
+        >
+          @if (variant() === 'danger') {
+            <span class="text-lg">⚠️</span>
+          } @else {
+            <span class="text-lg">ℹ️</span>
+          }
+        </div>
+
+        <!-- Texto -->
+        <div class="min-w-0 flex-1">
+          <h3 class="text-base font-bold text-gray-900">
+            {{ title() }}
+          </h3>
+          <p class="mt-1 text-sm text-gray-500">
+            {{ message() }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Footer con botones -->
+      <div class="flex justify-end gap-2 border-t border-gray-100 bg-gray-50 px-6 py-4">
+        <button
+          type="button"
+          (click)="onCancel()"
+          class="cursor-pointer rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100"
+        >
+          {{ cancelText() }}
+        </button>
+
+        <button
+          type="button"
+          (click)="onConfirm()"
+          class="cursor-pointer rounded-lg px-4 py-2 text-sm font-medium text-white"
+          [class.bg-red-600]="variant() === 'danger'"
+          [class.hover:bg-red-700]="variant() === 'danger'"
+          [class.bg-blue-600]="variant() === 'primary'"
+          [class.hover:bg-blue-700]="variant() === 'primary'"
+        >
+          {{ confirmText() }}
+        </button>
+      </div>
+    </div>
+  </div>
+}

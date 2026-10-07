@@ -1,0 +1,133 @@
+<div class="flex min-h-screen flex-col">
+  <div class="flex min-h-0 flex-1">
+    <!-- Sidebar -->
+    <aside
+      class="fixed inset-y-0 left-0 z-50 flex w-60 flex-col overflow-hidden bg-gray-950 p-4 text-white shadow-lg transition-transform duration-300 lg:static lg:z-auto lg:transition-[width] lg:duration-300"
+      [class.-translate-x-full]="!isSidebarOpen()"
+      [class.translate-x-0]="isSidebarOpen()"
+      [class.lg:w-0]="!isSidebarOpen()"
+      [class.lg:w-60]="isSidebarOpen()"
+      [class.lg:p-0]="!isSidebarOpen()"
+      [class.lg:p-4]="isSidebarOpen()"
+    >
+      <app-sidebar class="flex-1" [isSidebarOpen]="isSidebarOpen()"></app-sidebar>
+    </aside>
+
+    <!-- Contenido principal -->
+    <div class="flex min-w-0 flex-1 flex-col gap-4">
+      <app-menu [title]="'Categorías'" (toggleSidebar)="toggleSidebar()"></app-menu>
+
+      <main class="flex-1 p-4">
+        <div class="mx-auto max-w-5xl">
+          <!-- Header -->
+          <div class="mb-6 flex items-center justify-between gap-4">
+            <div>
+              <h1 class="text-2xl font-bold text-gray-800">Categorías</h1>
+              <p class="mt-1 text-sm text-gray-500">
+                Administra tus categorías de ingresos y gastos.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              (click)="onOpenCreateModal()"
+              title="Nueva categoría"
+              aria-label="Nueva categoría"
+              class="inline-flex h-12 w-12 shrink-0 cursor-pointer items-center justify-center rounded-full bg-blue-600 text-white transition hover:bg-blue-700 active:scale-95 sm:h-auto sm:w-auto sm:gap-2 sm:rounded-lg sm:px-4 sm:py-2.5"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="22" height="22">
+                <path
+                  fill="#ffffff"
+                  d="M23.49 7.245A4.25 4.25 0 0 1 26.495 6h11.257a4.25 4.25 0 0 1 4.25 4.25v11.257a4.25 4.25 0 0 1-.452 1.909A12.94 12.94 0 0 0 34 21c-7.18 0-13 5.82-13 13c0 2.815.895 5.42 2.415 7.549a4.25 4.25 0 0 1-4.909-.796L7.25 29.495a4.25 4.25 0 0 1 0-6.01zM33.5 17a2.5 2.5 0 1 0 0-5a2.5 2.5 0 0 0 0 5M45 34c0 6.075-4.925 11-11 11s-11-4.925-11-11s4.925-11 11-11s11 4.925 11 11m-10-7a1 1 0 1 0-2 0v6h-6a1 1 0 1 0 0 2h6v6a1 1 0 1 0 2 0v-6h6a1 1 0 1 0 0-2h-6z"
+                />
+              </svg>
+              <span class="hidden sm:inline">Nueva categoría</span>
+            </button>
+          </div>
+
+          <!-- Lista -->
+          <app-category-list
+            [categories]="categories()"
+            (edit)="onEditCategory($event)"
+            (delete)="onDeleteCategory($event)"
+          />
+        </div>
+      </main>
+    </div>
+
+    <!-- Backdrop del sidebar en móvil -->
+    <div
+      class="fixed inset-0 z-40 bg-black/50 lg:hidden"
+      [class.hidden]="!isSidebarOpen()"
+      (click)="isSidebarOpen.set(false)"
+    ></div>
+  </div>
+
+  <app-footer></app-footer>
+
+  <!-- Modal de creación -->
+  @if (isCreateModalOpen()) {
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+      (click)="closeCreateModal()"
+    >
+      <div
+        class="w-full max-w-md overflow-hidden rounded-xl bg-white shadow-xl"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="border-b border-gray-200 px-6 py-4">
+          <h3 class="text-lg font-bold text-gray-800">Nueva categoría</h3>
+        </div>
+
+        <div class="p-6">
+          <app-category-form
+            (submitted)="onCreateCategory($event)"
+            (cancelled)="closeCreateModal()"
+          />
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Modal de edición -->
+  @if (isEditModalOpen()) {
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
+      (click)="closeEditModal()"
+    >
+      <div
+        class="w-full max-w-md overflow-hidden rounded-xl bg-white shadow-xl"
+        (click)="$event.stopPropagation()"
+      >
+        <div class="border-b border-gray-200 px-6 py-4">
+          <h3 class="text-lg font-bold text-gray-800">Editar categoría</h3>
+        </div>
+
+        <div class="p-6">
+          <app-category-form
+            [initialValue]="categoryToEdit()"
+            [isEditMode]="true"
+            (submitted)="onUpdateCategory($event)"
+            (cancelled)="closeEditModal()"
+          />
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Modal de confirmación para eliminar -->
+  <app-confirm-modal
+    [isOpen]="isDeleteModalOpen()"
+    title="Eliminar categoría"
+    [message]="
+      '¿Seguro que quieres eliminar \'' +
+      (categoryToDelete()?.name ?? '') +
+      '\'? Esta acción no se puede deshacer.'
+    "
+    confirmText="Eliminar"
+    cancelText="Cancelar"
+    variant="danger"
+    (confirmed)="onConfirmDelete()"
+    (cancelled)="closeDeleteModal()"
+  />
+</div>
