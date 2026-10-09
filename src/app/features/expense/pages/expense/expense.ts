@@ -1,4 +1,4 @@
-import { Component, HostListener, inject, signal } from '@angular/core';
+import { Component, computed, HostListener, inject, signal } from '@angular/core';
 import { ExpenseService } from '../../services/expense-service';
 import { CategoryService } from '../../../category/services/category-service';
 import { NotificationService } from '../../../../core/services/notification-service';
@@ -11,10 +11,12 @@ import { MovementsTable } from '../../../../shared/components/movements-table/mo
 import { Footer } from '../../../../shared/components/footer/footer';
 import { MovementsForm } from '../../../../shared/components/movements-form/movements-form';
 import { ConfirmModal } from '../../../../shared/components/confirm-modal/confirm-modal';
+import { MovementFilters } from '../../../../shared/interfaces/movement-filters.interface';
+import { MovementsFilters } from '../../../../shared/components/movements-filters/movements-filters';
 
 @Component({
   selector: 'app-expense',
-  imports: [Sidebar, Menu, MovementsTable, Footer, MovementsForm, ConfirmModal],
+  imports: [Sidebar, Menu, MovementsTable, Footer, MovementsForm, ConfirmModal, MovementsFilters],
   templateUrl: './expense.html',
   styleUrl: './expense.css',
 })
@@ -42,6 +44,42 @@ export default class Expense {
   // ============ Estado ============
   readonly movements = signal<MovementInterface[]>([]);
   readonly categories = signal<CategoryInterface[]>([]);
+  readonly filters = signal<MovementFilters>({
+    dateRange: 'all',
+    dateFrom: '',
+    dateTo: '',
+    categoryId: 'all',
+    search: '',
+  });
+
+  readonly filteredMovements = computed(() => {
+    const f = this.filters();
+    const list = this.movements();
+
+    return list.filter((movement) => {
+      // 1) Filtro por fecha
+      if (f.dateFrom && movement.date < f.dateFrom) return false;
+      if (f.dateTo && movement.date > f.dateTo) return false;
+
+      // 2) Filtro por categoría
+      if (f.categoryId !== 'all' && movement.categoryId !== f.categoryId) {
+        return false;
+      }
+
+      // 3) Filtro por texto (descripción)
+      if (f.search) {
+        const search = f.search.toLowerCase();
+        const description = (movement.description ?? '').toLowerCase();
+        if (!description.includes(search)) return false;
+      }
+
+      return true;
+    });
+  });
+
+  onFiltersChange(filters: MovementFilters): void {
+    this.filters.set(filters);
+  }
 
   readonly isCreateModalOpen = signal(false);
   readonly isEditModalOpen = signal(false);
